@@ -1,3 +1,4 @@
+
 x-ros: &ros
   build:
     context: ..
@@ -25,20 +26,42 @@ services:
     <<: *ros
     container_name: m01_listener
     command: ros2 run demo_nodes_py listener
-    depends_on: [talker]
+    depends_on:
+      - talker
     restart: unless-stopped
 
   dev:
     <<: *ros
     container_name: m01_dev
-    profiles: ["dev"]
+    profiles:
+      - dev
     stdin_open: true
     tty: true
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY:-wayland-0}
+      - XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+      - PULSE_SERVER=/mnt/wslg/PulseServer
+      - QT_X11_NO_MITSHM=1
+      - LIBGL_ALWAYS_SOFTWARE=0
+      - GALLIUM_DRIVER=d3d12
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-31}
+      - RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+      - PYTHONUNBUFFERED=1
+      - RCUTILS_LOGGING_BUFFERED_STREAM=1
+      - TURTLEBOT3_MODEL=burger
+      - GAZEBO_MODEL_DATABASE_URI=
+    devices:
+      - /dev/dxg:/dev/dxg
     volumes:
       - ../src:/ws/src
       - ws_build:/ws/build
       - ws_install:/ws/install
-
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /mnt/wslg:/mnt/wslg
+      - /usr/lib/wsl:/usr/lib/wsl:ro
+      - gazebo_home:/home/dev/.gazebo
 volumes:
   ws_build:
   ws_install:
+  gazebo_home:

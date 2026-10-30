@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <world name="lab_arena">
+    <include><uri>model://ground_plane</uri></include>
+    <include><uri>model://sun</uri></include>
+
+    <plugin name="gazebo_ros_state" filename="libgazebo_ros_state.so">
+      <ros><namespace>/gazebo</namespace></ros>
+      <update_rate>10.0</update_rate>
+    </plugin>
+
+    <model name="wall_north"><static>true</static><pose>0 2 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>4.1 0.1 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>4.1 0.1 0.5</size></box></geometry></visual>
+      </link></model>
+    <model name="wall_south"><static>true</static><pose>0 -2 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>4.1 0.1 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>4.1 0.1 0.5</size></box></geometry></visual>
+      </link></model>
+    <model name="wall_east"><static>true</static><pose>2 0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.1 4.1 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.1 4.1 0.5</size></box></geometry></visual>
+      </link></model>
+    <model name="wall_west"><static>true</static><pose>-2 0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.1 4.1 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.1 4.1 0.5</size></box></geometry></visual>
+      </link></model>
+
+    <model name="obstacle_box"><static>true</static><pose>0.6 0.6 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><box><size>0.4 0.4 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.4 0.4 0.5</size></box></geometry></visual>
+      </link></model>
+    <model name="obstacle_cyl"><static>true</static><pose>0.2 -1.0 0.25 0 0 0</pose>
+      <link name="link">
+        <collision name="c"><geometry><cylinder><radius>0.2</radius><length>0.5</length></cylinder></geometry></collision>
+        <visual name="v"><geometry><cylinder><radius>0.2</radius><length>0.5</length></cylinder></geometry></visual>
+      </link></model>
+  </world>
+</sdf>
+
